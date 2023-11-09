@@ -23,6 +23,7 @@ func NewConnection(host, authToken string) (chan *SubmitBlockRequest, error) {
 }
 
 func ConnectToGRPCService(host, authToken string, bodyChan *chan *SubmitBlockRequest, conn *grpc.ClientConn) {
+	//check connection service
 	if conn == nil {
 		newConn, err := grpc.Dial(host, grpc.WithInsecure())
 		if err != nil {
@@ -44,6 +45,7 @@ func ConnectToGRPCService(host, authToken string, bodyChan *chan *SubmitBlockReq
 		}
 	}()
 
+	//Append context to connection
 	ctx := metadata.AppendToOutgoingContext(context.Background(), "authorization", authToken)
 
 	client := NewRelayClient(conn)
