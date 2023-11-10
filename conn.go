@@ -22,6 +22,19 @@ func NewConnection(host, authToken string) (chan *SubmitBlockRequest, error) {
 	return bodyChan, err
 }
 
+func NewConnection2(host, authToken string) (chan *SubmitBlockRequest, error) {
+
+	// Check initial connection for approval
+	conn, err := grpc.Dial(host, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		return nil, err
+	}
+	bodyChan := make(chan *SubmitBlockRequest, 100)
+	go ConnectToGRPCService(host, authToken, &bodyChan, conn)
+
+	return bodyChan, err
+}
+
 func ConnectToGRPCService(host, authToken string, bodyChan *chan *SubmitBlockRequest, conn *grpc.ClientConn) {
 	//check connection service
 	if conn == nil {
