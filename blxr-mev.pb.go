@@ -34,6 +34,7 @@ type BidTrace struct {
 	GasLimit             uint64 `protobuf:"varint,7,opt,name=GasLimit,proto3" json:"GasLimit,omitempty"`
 	GasUsed              uint64 `protobuf:"varint,8,opt,name=GasUsed,proto3" json:"GasUsed,omitempty"`
 	Value                string `protobuf:"bytes,9,opt,name=Value,proto3" json:"Value,omitempty"`
+	Trace				 string `name trace`	
 }
 
 func (x *BidTrace) Reset() {
